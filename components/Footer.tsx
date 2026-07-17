@@ -9,8 +9,8 @@ export function Footer() {
             CONTACT
           </h2>
           <p className="mt-2 max-w-md text-foreground">
-            Open to data science and ML engineering roles. The fastest way to
-            reach me is email.
+            Open to Data Science, AI Engineer, and Machine Learning Engineer
+            roles. The fastest way to reach me is email.
           </p>
         </div>
 

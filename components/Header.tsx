@@ -2,8 +2,8 @@ import Link from "next/link";
 import { EthanLLM } from "./EthanLLM";
 
 const NAV_LINKS = [
-  { href: "/#about", label: "About" },
-  { href: "/#projects", label: "Projects" },
+  { href: "/#projects", label: "Work" },
+  { href: "/about", label: "About" },
   { href: "/#skills", label: "Skills" },
   { href: "/#contact", label: "Contact" },
 ];
@@ -21,13 +21,13 @@ export function Header() {
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
           <nav className="flex flex-wrap gap-x-5 gap-y-1">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.href}
                 href={link.href}
                 className="text-sm text-muted transition-colors hover:text-foreground"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
           </nav>
           <EthanLLM />
