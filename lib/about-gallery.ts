@@ -9,7 +9,7 @@ export const ABOUT_CATEGORIES: AboutCategory[] = [
   {
     number: "01",
     label: "Data Scientist",
-    photos: ["/about/data-scientist-1.jpg", null, null],
+    photos: ["/about/data-scientist-1.jpg", "/about/data-scientist-2.jpg", null],
   },
   {
     number: "02",
