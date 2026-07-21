@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ABOUT_CATEGORIES } from "@/lib/about-gallery";
 import { PhotoPlaceholder } from "./PhotoPlaceholder";
 
@@ -10,9 +11,24 @@ export function AboutGallery() {
             {category.number}. {category.label.toUpperCase()}
           </h3>
           <div className="mt-4 grid grid-cols-3 gap-3">
-            {Array.from({ length: category.photoCount }).map((_, i) => (
-              <PhotoPlaceholder key={i} />
-            ))}
+            {category.photos.map((src, i) =>
+              src ? (
+                <div
+                  key={i}
+                  className="relative aspect-[4/5] overflow-hidden rounded-lg border border-border"
+                >
+                  <Image
+                    src={src}
+                    alt={`${category.label} photo ${i + 1}`}
+                    fill
+                    sizes="(min-width: 1024px) 260px, 33vw"
+                    className="object-cover"
+                  />
+                </div>
+              ) : (
+                <PhotoPlaceholder key={i} />
+              ),
+            )}
           </div>
         </div>
       ))}

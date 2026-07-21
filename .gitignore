@@ -37,6 +37,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+# raw photo dumps (zips, Live Photo .mov pairs, unused extras) — only the
+# curated, renamed selects in public/about/ are meant to ship
+/photos
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
