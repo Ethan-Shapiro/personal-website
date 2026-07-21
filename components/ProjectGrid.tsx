@@ -12,7 +12,7 @@ export function ProjectGrid() {
           End-to-end systems, not just notebooks
         </p>
         <p className="mt-3 max-w-2xl text-muted">
-          Projects carried from real data through a shipped system. Every
+          Projects carried from real data through a working system. Every
           case study covers the data, the trade-offs, how it deployed, and
           what it demonstrated.
         </p>

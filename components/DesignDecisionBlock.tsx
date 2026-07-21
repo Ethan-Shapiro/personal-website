@@ -5,6 +5,7 @@ const ACCENT_BAR: Record<Accent, string> = {
   emerald: "bg-emerald-400",
   amber: "bg-amber-400",
   rose: "bg-rose-400",
+  sky: "bg-sky-400",
 };
 
 export function DesignDecisionBlock({

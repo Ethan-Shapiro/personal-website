@@ -1,4 +1,4 @@
-export type Accent = "indigo" | "emerald" | "amber" | "rose";
+export type Accent = "indigo" | "emerald" | "amber" | "rose" | "sky";
 
 export type Status = "Concept" | "Prototype" | "Shipped";
 
@@ -32,6 +32,43 @@ export type Project = {
 };
 
 export const projects: Project[] = [
+  {
+    slug: "atc-routing-agent",
+    title: "Autonomous ATC Routing Agent",
+    label: "ATC Agent",
+    tagline: "Real controllers hand off traffic between roles — so do these agents.",
+    tags: ["LangGraph", "MCP + RAG", "PostGIS", "FastAPI", "Airflow"],
+    accent: "sky",
+    status: "Prototype",
+    year: 2026,
+    placeholder: false,
+    situation:
+      "Air traffic control is a real-time handoff chain — Clearance Delivery, Ground, Tower, Approach — where every decision has to be grounded in exact regulations and exact geometry, not vibes. Most agent demos either hardcode the domain logic or let the LLM estimate things it has no business estimating, like whether two runways physically intersect.",
+    task: "Build a multi-agent system simulating the real 4-role ATC handoff chain around Santa Barbara Municipal Airport (KSBA), with every agent grounded in live geospatial data and the actual FAA rulebook — and route anything requiring exact math to a deterministic tool instead of leaving it to the model.",
+    dataChallenges:
+      "Live flight telemetry has to be polled from the OpenSky Network within its rate limits (a configurable poll interval plus an active daily-credit-budget guard), written into a PostGIS schema, and checked for proximity conflicts — while the full FAA rulebook (JO 7110.65 and JO 7360.1) needs to be searchable well enough for an agent to cite the actual regulation behind a decision, not a paraphrase.",
+    action:
+      "Built a 4-role LangGraph orchestration (Clearance Delivery → Ground → Tower → Approach for departures, reversed for arrivals) where each role hands off to an explicitly named next role rather than an implicit lookup, so both directions work without special-casing. Every reasoning node calls an MCP server exposing query_radar (live PostGIS aircraft state) and query_faa_rules (a FAISS index over the FAA rulebook) tools. A live dashboard, served directly from the FastAPI app, visualizes the airport diagram and scenario playback, including exactly which tools were called for each decision.",
+    tradeoffs:
+      "Anchored the whole design on one rule: LLMs cannot do math. Tower's runway-intersection check — whether it's safe to clear traffic onto a runway that physically crosses another — is a real PostGIS distance query against seeded runway geometry, not model inference. That means giving up some flexibility in edge cases the deterministic check doesn't cover, in exchange for a safety-critical decision that's actually verified correct instead of merely plausible-sounding.",
+    designDecisions: [
+      {
+        title: "Deterministic guardrails for anything requiring exact math",
+        rationale:
+          "Tower's runway-conflict check calls a real geospatial query rather than asking the model to estimate a distance or threshold — live-verified correct in both directions (must-hold and should-clear cases), not just the happy path.",
+      },
+      {
+        title: "Explicitly named handoffs, not an implicit “next” lookup",
+        rationale:
+          "Each role hands off by naming the specific next role rather than following a generic sequence pointer, so the same graph handles departures (Clearance → Ground → Tower → Approach) and arrivals (reversed) without special-casing either direction.",
+      },
+    ],
+    deployment:
+      "An MCP server and FAISS-backed RAG pipeline ground every agent decision in the real FAA rulebook and live radar state. A PostGIS + OpenSky Network pipeline ingests flight telemetry with a rate-limit-aware credit budget, with Airflow handling minute-scale housekeeping outside the hot path. The whole stack runs in Docker/Docker Compose, with FastAPI serving the live scenario dashboard.",
+    impact:
+      "Most of the core is built and live-verified end to end: the geospatial pipeline, the FAA-rulebook RAG and MCP server, the 4-role LangGraph orchestration, and Tower's deterministic safety check. Still growing — live auto-triggering off real state transitions (currently reached via a manual trigger endpoint), a coordination-scoring rework, and an optional phraseology fine-tune are on the roadmap.",
+    links: {},
+  },
   {
     slug: "telemetry-anomaly-detection",
     title: "Real-Time Telemetry Anomaly Detection Pipeline",

@@ -8,13 +8,18 @@ const ACCENT_STOPS: Record<Accent, [string, string]> = {
   emerald: ["#34d399", "#065f46"],
   amber: ["#fbbf24", "#92400e"],
   rose: ["#fb7185", "#881337"],
+  sky: ["#38bdf8", "#0c4a6e"],
 };
 
-const ACCENT_PATTERN: Record<Accent, "grid" | "dots" | "waves" | "lines"> = {
+const ACCENT_PATTERN: Record<
+  Accent,
+  "grid" | "dots" | "waves" | "lines" | "rings"
+> = {
   indigo: "grid",
   emerald: "dots",
   amber: "waves",
   rose: "lines",
+  sky: "rings",
 };
 
 export function ProjectPreviewArt({
@@ -104,6 +109,25 @@ export function ProjectPreviewArt({
               stroke="white"
               strokeOpacity="0.18"
               strokeWidth="2"
+            />
+          </pattern>
+        )}
+
+        {pattern === "rings" && (
+          <pattern
+            id={patternId}
+            width="34"
+            height="34"
+            patternUnits="userSpaceOnUse"
+          >
+            <circle
+              cx="17"
+              cy="17"
+              r="7"
+              fill="none"
+              stroke="white"
+              strokeOpacity="0.2"
+              strokeWidth="1.5"
             />
           </pattern>
         )}
