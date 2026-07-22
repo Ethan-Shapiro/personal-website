@@ -35,10 +35,11 @@ async function fetchWithRetry(url: string, init: RequestInit): Promise<Response>
   return lastResponse!;
 }
 
-// gemini-3.5-flash is the better model, but — like any freshly-launched
-// model — can 503 under high demand. Fall back to the older, stable
-// flash-lite tier rather than surfacing an error when that happens.
-const PRIMARY_MODEL = "gemini-3.5-flash";
+// gemini-3.6-flash is the current model (cheaper than 3.5-flash), but — like
+// any freshly-launched model — can 503 under high demand. Fall back to the
+// older, stable flash-lite tier rather than surfacing an error when that
+// happens.
+const PRIMARY_MODEL = "gemini-3.6-flash";
 const FALLBACK_MODEL = "gemini-3.1-flash-lite";
 
 // Despite response_format: json_object, models occasionally wrap the JSON in
